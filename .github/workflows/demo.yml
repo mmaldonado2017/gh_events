@@ -13,26 +13,6 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v6
-      - name: Print directory structure
-        run: |
-          echo "=== GitHub Actions Directories ==="
-          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-          echo "RUNNER_TEMP: $RUNNER_TEMP"
-          echo "RUNNER_TOOL_CACHE: $RUNNER_TOOL_CACHE"
-          echo "GITHUB_WORKSPACE contents:"
-          ls -la $GITHUB_WORKSPACE
-          echo ""
-          echo "RUNNER_TOOL_CACHE contents:"
-          ls -la $RUNNER_TOOL_CACHE
-
-          echo "RUNNER_TOOL_CACHE/node contents:"
-          ls -la $RUNNER_TOOL_CACHE/node
-          echo ""
-          echo "Working directory:"
-          pwd
-          echo ""
-          echo "All GitHub env vars:"
-          env | grep GITHUB_ | sort
       - name: Install dependencies
         run: npm ci
       - name: Lint code
@@ -49,6 +29,20 @@ jobs:
         run: npm ci
       - name: Build website
         run: npm run build
+      - name: Print directory structure
+        run: |
+          echo "=== GitHub Actions Directories ==="
+          echo "GITHUB_WORKSPACE contents:"
+          ls -la $GITHUB_WORKSPACE
+          echo "All GitHub env vars:"
+          env | grep GITHUB_ | sort
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-files
+          path: |
+            dist
+            package.json
   deploy:
     needs: build
     runs-on: ubuntu-latest
