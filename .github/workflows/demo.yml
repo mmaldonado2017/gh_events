@@ -13,6 +13,8 @@ jobs:
     #   output1: ${{ steps.step1.outputs.firstword }}
     #   output2: ${{ steps.step2.outputs.secondword }}
     steps:
+      - name: Print github
+        run: echo $GITHUB_OUTPUT
       - id: step1
         run: echo "firstword=hello" >> $GITHUB_OUTPUT
       - id: step2
