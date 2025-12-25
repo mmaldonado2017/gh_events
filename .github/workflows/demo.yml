@@ -9,9 +9,9 @@ jobs:
   example_job:
     name: Generate output
     runs-on: ubuntu-latest
-    # outputs:
-    #   output1: ${{ steps.step1.outputs.firstword }}
-    #   output2: ${{ steps.step2.outputs.secondword }}
+    outputs:
+      output1: ${{ steps.step1.outputs.firstword }}
+      output2: ${{ steps.step2.outputs.secondword }}
     steps:
       - name: Print github
         run: echo $GITHUB_OUTPUT
@@ -23,16 +23,15 @@ jobs:
         run: |
           echo "First word: ${{ steps.step1.outputs.firstword }}"
           echo "Second word: ${{ steps.step2.outputs.secondword }}"
-  
-  # use_outputs:
-  #   name: Use outputs from another job
-  #   needs: example_job
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Print variables from previous job
-  #       run: |
-  #         echo "Output1: ${{ needs.example_job.outputs.output1 }}"
-  #         echo "Output2: ${{ needs.example_job.outputs.output2 }}"
+  use_outputs:
+    name: Use outputs from another job
+    needs: example_job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print variables from previous job
+        run: |
+          echo "Output1: ${{ needs.example_job.outputs.output1 }}"
+          echo "Output2: ${{ needs.example_job.outputs.output2 }}"
   # test:
   #   runs-on: ubuntu-latest
   #   steps:
