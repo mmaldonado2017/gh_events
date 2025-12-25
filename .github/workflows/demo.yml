@@ -24,6 +24,9 @@ jobs:
           echo ""
           echo "RUNNER_TOOL_CACHE contents:"
           ls -la $RUNNER_TOOL_CACHE
+
+          echo "RUNNER_TOOL_CACHE/node contents:"
+          ls -la $RUNNER_TOOL_CACHE/node
           echo ""
           echo "Working directory:"
           pwd
