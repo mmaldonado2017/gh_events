@@ -4,12 +4,31 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '.github/workflows/**'
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
         uses: actions/checkout@v6
+      - name: Print directory structure
+        run: |
+          echo "=== GitHub Actions Directories ==="
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+          echo "RUNNER_TEMP: $RUNNER_TEMP"
+          echo "RUNNER_TOOL_CACHE: $RUNNER_TOOL_CACHE"
+          echo "GITHUB_WORKSPACE contents:"
+          ls -la $GITHUB_WORKSPACE
+          echo ""
+          echo "RUNNER_TOOL_CACHE contents:"
+          ls -la $RUNNER_TOOL_CACHE
+          echo ""
+          echo "Working directory:"
+          pwd
+          echo ""
+          echo "All GitHub env vars:"
+          env | grep GITHUB_ | sort
       - name: Install dependencies
         run: npm ci
       - name: Lint code
